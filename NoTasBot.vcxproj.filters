@@ -18,9 +18,18 @@
     <ClCompile Include="NoTASBOT.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NoTASBOT.h">
+    <ClInclude Include="NoTasBot.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TasBot_v34-18_offsets.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NoTasBot_config.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
