@@ -1,23 +1,27 @@
-#include "NoTASBOT.h"
+#include "NoTasBot.hpp"
+#include "TasBot_v34-18_offsets.h"
+#include "NoTasBot_config.h"
 
-DWORD WINAPI Main_Thread(LPVOID instance)
+
+DWORD WINAPI Remove_Label(void* instance)
 {
-	DWORD tBotBase = (DWORD)GetModuleHandleA("tBot.dll");
-	char(*tBotLabel)[16] = (char(*)[16])(tBotBase + 0x24B568);
-	char(*tBotLabel2)[16] = (char(*)[16])(tBotBase + 0x24B59C);
-	memcpy(tBotLabel, "", strlen((LPCSTR)tBotLabel));
-	memcpy(tBotLabel2, "", strlen((LPCSTR)tBotLabel2));
+	// Base address of TasBot dll
+	static uintptr_t tBotBase;
+
+	// wait until TasBot dll is loaded
+	do {
+		tBotBase = (uintptr_t)GetModuleHandleA(TBOT_DLL);
+	} while (!tBotBase);
+
+	// First Address of "Replay By TASBOT" Label
+	static char* tBotLabel = (char*)(tBotBase + TASBOT_LABEL_1);
+
+	// Second Address of "Replay By TASBOT" Label
+	static char* tBotLabel2 = (char*)(tBotBase + TASBOT_LABEL_2);
+
+	// Clear first and second labels
+	memcpy(tBotLabel, "", strlen(tBotLabel));
+	memcpy(tBotLabel2, "", strlen(tBotLabel2));
+
 	return 0;
-}
-DWORD APIENTRY DllMain(
-	HMODULE hModule,
-	DWORD dwReason,
-	LPVOID lpReserved
-)
-{
-	if (dwReason == DLL_PROCESS_ATTACH) {
-		HANDLE threadHandle = CreateThread(NULL, 0, Main_Thread, NULL, 0, NULL);
-		if (threadHandle) CloseHandle(threadHandle);
-	}
-	return TRUE;
 }
