@@ -10,7 +10,7 @@
 
 constexpr SIZE_T NO_TASBOT_STACK_SIZE = 0x8C;
 
-DWORD WINAPI Remove_Label(void* instance);
+DWORD WINAPI RemoveTasBotLabel(void *instance);
 
 
 #endif // !NO_TASBOT_H

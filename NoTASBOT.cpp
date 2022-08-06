@@ -1,21 +1,23 @@
 #include "NoTasBot.hpp"
 
+static inline void CleanStringByOffset(const void *pBaseAddr, const std::uintptr_t offset) {
+	std::strcpy(reinterpret_cast<char *>((reinterpret_cast<std::uintptr_t>(pBaseAddr) + offset)), "");
+}
 
-DWORD WINAPI Remove_Label(void* instance)
+DWORD WINAPI RemoveTasBotLabel(void *instance)
 {
 	// Base address of TasBot dll
-	static HANDLE tBotBase;
+	HANDLE TasBot_Base;
 
 	// wait until TasBot dll is loaded
 	do {
-		tBotBase = GetModuleHandleA(TBOT_DLL);
-	} while (!tBotBase);
+		TasBot_Base = GetModuleHandleA(TASBOT_DLL);
+	} while (!TasBot_Base);
 
-	// Clear first and second labels
-	strcpy(reinterpret_cast<char*>((reinterpret_cast<std::uintptr_t>(tBotBase) + TASBOT_LABEL_1)), "");
-	strcpy(reinterpret_cast<char*>((reinterpret_cast<std::uintptr_t>(tBotBase) + TASBOT_LABEL_2)), "");
+	CleanStringByOffset(TasBot_Base, TASBOT_LABEL_1);
+	CleanStringByOffset(TasBot_Base, TASBOT_LABEL_2);
 
-	CloseHandle(tBotBase);
+	CloseHandle(TasBot_Base);
 
 	return 0;
 }
